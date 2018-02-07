@@ -19,4 +19,4 @@ routes(app); //register the route
 
 app.listen(port);
 
-console.log('nizzotes-api server started on: ' + port);
+console.log('nizzotes-api server srsrted on: ' + port);

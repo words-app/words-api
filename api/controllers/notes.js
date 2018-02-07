@@ -3,19 +3,34 @@
 var mongoose = require('mongoose'),
     Note = mongoose.model('Notes');
 
-exports.listNotes = function (req, res) {
-    Note.find({}, function (err, note) {
-        if (err)
+exports.listNotes = (req, res) => {
+    Note.find({}, (err, note) => {
+        if (err) {
             res.send(err);
+        }
+
         res.json(note);
     });
 };
 
-exports.createNote = function (req, res) {
-    var newNote = new Note(req.body);
-    newNote.save(function (err, note) {
-        if (err)
+exports.createNote = (req, res) => {
+    let newNote = new Note(req.body);
+
+    newNote.save((err, note) => {
+        if (err) {
             res.send(err);
+        }
+
         res.json(note);
     });
 };
+
+exports.readNote = (req, res) => {
+    Note.findById(req.params.noteId, (err, note) => {
+        if (err) {
+            res.send(err);
+        }
+
+        res.json(note);
+    });
+}
