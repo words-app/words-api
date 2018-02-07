@@ -34,3 +34,25 @@ exports.readNote = (req, res) => {
         res.json(note);
     });
 }
+
+exports.updateNote = (req, res) => {
+    Note.findOneAndUpdate({ _id: req.params.noteId }, req.body, { new: true }, (err, note) => {
+        if (err) {
+            res.send(err)
+        }
+
+        res.json(note);
+    })
+}
+
+exports.deleteNote = (req, res) => {
+    Note.remove({
+        _id: req.params.noteId
+    }, (err, note) => {
+        if (err) {
+            res.send(err);
+        }
+
+        res.json({ message: 'Note successfully deleted' });
+    })
+}
