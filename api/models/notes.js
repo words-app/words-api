@@ -1,9 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var NoteSchema = new Schema({
+const Schema = mongoose.Schema;
+
+const NoteSchema = new Schema({
     name: {
         type: String,
         required: 'Don\'t you want to give this note a name?'

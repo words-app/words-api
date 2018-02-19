@@ -1,15 +1,21 @@
 'use strict';
 
-var express = require('express'),
-    app = express(),
-    port = process.env.PORT || 3000,
-    mongoose = require('mongoose'),
-    Note = require('./api/models/notes'), //created model loading here
-    bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+
+const Note = require('./api/models/notes');
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/Notesdb');
+
+console.log(process.env.DB_URI);
+
+mongoose.connect(process.env.DB_URI);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

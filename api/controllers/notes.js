@@ -1,7 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    Note = mongoose.model('Notes');
+const mongoose = require('mongoose');
+
+const Note = mongoose.model('Notes');
 
 exports.listNotes = (req, res) => {
     Note.find({}, (err, note) => {
