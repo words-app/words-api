@@ -1,6 +1,7 @@
 'use strict';
 
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const dotenv = require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -19,6 +20,12 @@ mongoose.connect(process.env.DB_URI);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+
+const corsOptions = {
+    origin: process.env.CORS_WHITELIST
+};
+app.use(cors(corsOptions));
 
 var routes = require('./api/routes/notes'); //importing route
 routes(app); //register the route
