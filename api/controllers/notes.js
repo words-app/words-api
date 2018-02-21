@@ -1,13 +1,24 @@
 'use strict';
 
+const chalk = require('chalk');
 const mongoose = require('mongoose');
+
+const isDev = require('../../utils').isDev;
 
 const Note = mongoose.model('Notes');
 
 exports.listNotes = (req, res) => {
     Note.find({}, (err, note) => {
         if (err) {
+            if (isDev()) {
+                console.log(chalk.red(err));
+            }
             res.send(err);
+        }
+
+        if (isDev()) {
+            console.log(chalk.green('Notes retrieved successfully'));
+            console.log(chalk.white(note));
         }
 
         res.json(note);
@@ -19,7 +30,16 @@ exports.createNote = (req, res) => {
 
     newNote.save((err, note) => {
         if (err) {
+            if (isDev()) {
+                console.log(chalk.red(err));
+            }
+
             res.send(err);
+        }
+
+        if (isDev()) {
+            console.log(chalk.green(`Note ${note._id} created successfully`));
+            console.log(chalk.white(note));
         }
 
         res.json(note);
@@ -29,7 +49,16 @@ exports.createNote = (req, res) => {
 exports.readNote = (req, res) => {
     Note.findById(req.params.noteId, (err, note) => {
         if (err) {
+            if (isDev()) {
+                console.log(chalk.red(err));
+            }
+
             res.send(err);
+        }
+
+        if (isDev()) {
+            console.log(chalk.green(`Note ${req.params.noteId} found`));
+            console.log(chalk.white(note));
         }
 
         res.json(note);
@@ -39,7 +68,16 @@ exports.readNote = (req, res) => {
 exports.updateNote = (req, res) => {
     Note.findOneAndUpdate({ _id: req.params.noteId }, req.body, { new: true }, (err, note) => {
         if (err) {
+            if (isDev()) {
+                console.log(chalk.red(err));
+            }
+
             res.send(err)
+        }
+
+        if (isDev()) {
+            console.log(chalk.green(`Note ${req.params.noteId} found`));
+            console.log(chalk.white(note));
         }
 
         res.json(note);
@@ -51,9 +89,18 @@ exports.deleteNote = (req, res) => {
         _id: req.params.noteId
     }, (err, note) => {
         if (err) {
+            if (isDev()) {
+                console.log(chalk.red(err));
+            }
+
             res.send(err);
         }
 
-        res.json({ message: 'Note successfully deleted' });
+        if (isDev()) {
+            console.log(chalk.green(`Note ${req.params.noteId} successfully deleted`));
+            console.log(chalk.white(note));
+        }
+
+        res.json({ message: `Note ${req.params.noteId} successfully deleted` });
     })
 }
