@@ -37,7 +37,7 @@ exports.createNote = (req, res) => {
             res.send(err);
         }
 
-        if (isDev()) {
+        if (note && isDev()) {
             console.log(chalk.green(`Note ${note._id} created successfully`));
             console.log(chalk.white(note));
         }
