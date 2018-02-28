@@ -7,24 +7,6 @@ const isDev = require('../../utils').isDev;
 
 const Note = mongoose.model('Notes');
 
-exports.listNotes = (req, res) => {
-    Note.find({}, (err, note) => {
-        if (err) {
-            if (isDev()) {
-                console.log(chalk.red(err));
-            }
-            res.send(err);
-        }
-
-        if (isDev()) {
-            console.log(chalk.green('Notes retrieved successfully'));
-            console.log(chalk.white(note));
-        }
-
-        res.json(note);
-    });
-};
-
 exports.createNote = (req, res) => {
     let newNote = new Note(req.body);
 
@@ -39,6 +21,48 @@ exports.createNote = (req, res) => {
 
         if (note && isDev()) {
             console.log(chalk.green(`Note ${note._id} created successfully`));
+            console.log(chalk.white(note));
+        }
+
+        res.json(note);
+    });
+};
+
+exports.deleteNote = (req, res) => {
+    Note.remove({
+        _id: req.params.noteId
+    }, (err, note) => {
+        if (err) {
+            if (isDev()) {
+                console.log(chalk.red(err));
+            }
+
+            res.send(err);
+        }
+
+        if (isDev()) {
+            console.log(chalk.green(`Note ${req.params.noteId} successfully deleted`));
+            console.log(chalk.white(note));
+        }
+
+        res.json({
+            message: `Note ${req.params.noteId} successfully deleted`,
+            noteId: req.params.noteId,
+        });
+    })
+}
+
+exports.listNotes = (req, res) => {
+    Note.find({}, (err, note) => {
+        if (err) {
+            if (isDev()) {
+                console.log(chalk.red(err));
+            }
+            res.send(err);
+        }
+
+        if (isDev()) {
+            console.log(chalk.green('Notes retrieved successfully'));
             console.log(chalk.white(note));
         }
 
@@ -81,26 +105,5 @@ exports.updateNote = (req, res) => {
         }
 
         res.json(note);
-    })
-}
-
-exports.deleteNote = (req, res) => {
-    Note.remove({
-        _id: req.params.noteId
-    }, (err, note) => {
-        if (err) {
-            if (isDev()) {
-                console.log(chalk.red(err));
-            }
-
-            res.send(err);
-        }
-
-        if (isDev()) {
-            console.log(chalk.green(`Note ${req.params.noteId} successfully deleted`));
-            console.log(chalk.white(note));
-        }
-
-        res.json({ message: `Note ${req.params.noteId} successfully deleted` });
     })
 }
