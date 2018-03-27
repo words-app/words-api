@@ -5,7 +5,7 @@ module.exports = (app, passport) => {
     const notes = require('../controllers/notes');
 
     // TODO: complete this tutorial https://goo.gl/4zoui6
-    // TODO: ensure this is the bes place for these declarations
+    // TODO: ensure this is the best place for these declarations
     // app.post('/signup', passport.authenticate('local-signup', {
     //     failureRedirect: '/loginfailed',
     //     successRedirect: '/loginsuccess',

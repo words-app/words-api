@@ -17,9 +17,9 @@ module.exports = passport => {
 
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true
     }, (req, email, password, done) => {
         // User.findOne wont fire unless data is sent back
         process.nextTick(() => {
